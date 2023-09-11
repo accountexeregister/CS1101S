@@ -1,0 +1,20 @@
+function sums(lst) {
+    function sums_helper(rank, sum) {
+        return length(lst) <= rank
+               ? sum
+               : sums_helper(rank + 2, sum + list_ref(lst, rank));
+    }
+    return pair(sums_helper(0, 0), pair(sums_helper(1, 0), null));
+}
+
+function sums_recursive(lst) {
+    function sums_helper(rank) {
+        return length(lst) <= rank
+               ? 0
+               : list_ref(lst, rank) + sums_helper(rank + 2);
+    }
+    return pair(sums_helper(0), pair(sums_helper(1), null));
+}
+
+sums(list(1, 2, 3, 4, 5));
+sums_recursive(list(1, 2, 3, 4, 5));
