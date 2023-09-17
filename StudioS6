@@ -1,0 +1,51 @@
+function my_map(f, xs) {
+    // this should be a one-liner
+    return accumulate((x, y) => pair(f(x), y), null, xs);
+}
+
+function remove_duplicates(lst) {
+    if (is_null(lst)) {
+        return null;
+    } else {
+        const next_list = tail(lst);
+        const filtered_next_lst = filter(x => x !== head(lst), next_list);
+        return pair(head(lst), remove_duplicates(filtered_next_lst));
+    }
+}
+
+function makeup_amount(x, coins) {
+    if (x === 0) {
+        return list(null);
+    } else if (x < 0 || is_null(coins)) {
+        return null;
+    } else {
+        // Combinations that do not use the head coin.
+        const combi_A = makeup_amount(x, tail(coins));
+        // Combinations that do not use the head coin
+        // for the remaining amount.
+        const combi_B = makeup_amount(x - head(coins), 
+                                                tail(coins));
+        // Combinations that use the head coin.
+        const nextC = makeup_amount(x - head(coins), coins);
+        const first = is_null(nextC) ? null : append(list(head(coins)), nextC);
+        const second = is_null(combi_B) ? null : append(list(head(coins)), combi_B);
+        const combi_C = append(first, second);
+        return append(combi_A, combi_C);
+    }
+}
+
+// my_map(x => x + 1, list(1, 2, 3));
+// Result: list(2, 3, 4)
+
+// display(remove_duplicates(list(1, 2, 3, 4, 4, 3, 2, 1, 2)));
+// draw_data(remove_duplicates(list(1, 2, 3, 4, 4, 3, 2, 1, 2)));
+// Result: list(1, 2, 3, 4)
+// remove_duplicates(list("a", "x", "b", "c", "c", "b", "d"));
+// draw_data(remove_duplicates(list("a", "x", "b", "c", "c", "b", "d")));
+// Result: list("a", "x", "b", "c", "d")
+
+makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50));
+// Result: list(list(20, 1, 1), list(10, 5, 1, 5, 1), list(1, 20, 1),
+// list(1, 20, 1), list(1, 10, 5, 5, 1),
+// list(1, 10, 5, 1, 5))
+
