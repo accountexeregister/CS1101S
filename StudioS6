@@ -13,6 +13,10 @@ function remove_duplicates(lst) {
     }
 }
 
+function remove_duplicates_2nd(lst) {
+    return accumulate((x, y) => pair(x, filter(t => t !== x, y)));
+}
+
 function makeup_amount(x, coins) {
     if (x === 0) {
         return list(null);
@@ -23,13 +27,10 @@ function makeup_amount(x, coins) {
         const combi_A = makeup_amount(x, tail(coins));
         // Combinations that do not use the head coin
         // for the remaining amount.
-        const combi_B = makeup_amount(x - head(coins), 
-                                                tail(coins));
+        const combi_B = makeup_amount(x - head(coins), tail(coins));
         // Combinations that use the head coin.
-        const nextC = makeup_amount(x - head(coins), coins);
-        const first = is_null(nextC) ? null : append(list(head(coins)), nextC);
-        const second = is_null(combi_B) ? null : append(list(head(coins)), combi_B);
-        const combi_C = append(first, second);
+        const combi_C = map(x => pair(head(coins), x), combi_B);
+                        
         return append(combi_A, combi_C);
     }
 }
@@ -45,6 +46,8 @@ function makeup_amount(x, coins) {
 // Result: list("a", "x", "b", "c", "d")
 
 makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50));
+draw_data(makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50)));
+display_list(makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50)));
 // Result: list(list(20, 1, 1), list(10, 5, 1, 5, 1), list(1, 20, 1),
 // list(1, 20, 1), list(1, 10, 5, 5, 1),
 // list(1, 10, 5, 1, 5))
