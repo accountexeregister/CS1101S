@@ -1,0 +1,61 @@
+
+
+function largest(n) {
+    function length(n) {
+        function helper(n, lens) {
+            return is_one_digit(n) ? lens
+                                   : helper(math_floor(n / 10), lens + 1);
+        }
+        return helper(n, 1);
+    }
+    
+    function is_one_digit(n) {
+        return math_floor(n / 10) === 0;
+    }
+    
+    function middle(n) {
+        return math_floor(length(n) / 2);
+    }
+    
+    function get_first_num_in_n(num, length) {
+        return math_floor(num / math_pow(10, length - 1));
+    }
+    
+    function merge(n1, n2, compare) {
+        function helper(n1, n2, n1length, n2length, total_length) {
+            if (n1length <= 0) {
+                return n2;
+            } else if (n2length <= 0) {
+                return n1;
+            } else if (compare(get_first_num_in_n(n1, n1length), get_first_num_in_n(n2, n2length))) {
+                return get_first_num_in_n(n1, n1length) * math_pow(10, total_length - 1) + helper(n1 % math_pow(10, n1length - 1),
+                        n2, n1length - 1, n2length, total_length - 1);
+            } else {
+                return get_first_num_in_n(n2, n2length) * math_pow(10, total_length - 1) + helper(n1, n2 % math_pow(10, n2length - 1), 
+                        n1length, n2length - 1, total_length - 1);
+            }
+        }
+        const n1_length = length(n1);
+        const n2_length = length(n2);
+        return helper(n1, n2, n1_length, n2_length, n1_length + n2_length);
+    }
+    
+    function merge_sort(n, compare) {
+        if (is_one_digit(n)) {
+            return n;
+        } else {
+            const mid = middle(n);
+            return merge(merge_sort(math_floor(n / math_pow(10, mid)), compare), 
+                         merge_sort(n % math_pow(10, mid), compare), compare);
+        }
+    }
+    
+    if (n < 0) {
+        return -1 * merge_sort(-n, (a, b) => a <= b);
+    } else {
+        return merge_sort(n, (a, b) => a >= b);
+    }
+}
+
+
+display(largest(-1010));
