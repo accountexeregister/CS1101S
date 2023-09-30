@@ -1,0 +1,25 @@
+function graderVer2(arr) { // map a function that counts the number of 2-inversions to arr // and accumulates it 
+return accumulate((x, y) => { return x + y; }, 0, map(f => { return f(arr, true, 0, 0); }, map(x => { function y(lst, bool, lower, higher) { // Are we at the end? 
+                if (is_null(lst)) { 
+                    return lower * higher;
+                } 
+                else {
+                    if (head(lst) === x) { 
+                        return y(tail(lst), !bool, lower, higher); 
+                        
+                    } else if (bool) { 
+                        return y(tail(lst), bool, lower, higher + ((head(lst) > x) ? 1 : 0)); 
+                        
+                    } else { 
+                        return y(tail(lst), bool, lower + ((head(lst) < x) ? 1 : 0), higher); 
+                        
+                    } 
+                } 
+            } 
+            return y; 
+        
+        }, arr)
+     )
+    ); 
+
+}
