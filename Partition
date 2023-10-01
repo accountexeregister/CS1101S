@@ -1,0 +1,27 @@
+function partition(n, m) {
+    function helper(curr, sum) {
+        if (sum === n) {
+            return 1;
+        } else if (sum > n || curr > m) {
+            return 0;
+        } else {
+            const without_curr = helper(curr + 1, sum);
+            const with_curr = helper(curr, sum + curr);
+            const with_curr_and_next = helper(curr + 1, sum + curr);
+            return without_curr + math_max(with_curr, with_curr_and_next);
+        }
+    }
+    return helper(1, 0);
+}
+
+function partition_2(n, m) {
+    return n === 0
+           ? 1
+           : n < 0
+           ? 0
+           : m === 0
+           ? 0
+           : partition_2(n - m, m) + partition_2(n, m - 1);
+}
+
+partition_2(6, 4);
