@@ -24,4 +24,32 @@ function partition_2(n, m) {
            : partition_2(n - m, m) + partition_2(n, m - 1);
 }
 
-partition_2(6, 4);
+function partition_list(n, m) {
+    function helper(curr, sum) {
+        if (sum === n) {
+            return list(null);
+        } else if (sum > n || curr > m) {
+            return null;
+        } else {
+            const without_curr = helper(curr + 1, sum);
+            const with_curr_and_next = helper(curr, sum + curr);
+            const with_curr = map(x => pair(curr, x), with_curr_and_next);
+            return append(without_curr, with_curr);
+        }
+    }
+    return helper(1, 0);
+}
+
+function partition_list_2(n, k) {
+    function helper(target, curr) {
+        return (curr > k || target < 0) 
+            ? null
+            : target === 0
+            ? list(null)
+            : append(helper(target, curr + 1), map(
+                x => pair(curr, x),
+                helper(target - curr, curr)));
+    }
+    return helper(n, 1);
+}
+
