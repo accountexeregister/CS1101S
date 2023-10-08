@@ -1,0 +1,47 @@
+/*
+1a. Control: 7, stash: 6
+
+1b. Control: 11, stash: 2
+
+1c. Control: 6, stash: 3
+
+1d. Control: 7, stash: 3
+
+2. assign instructions = 6, pop instructions = 5 
+
+3. Result: 12
+    Explanation: 1 + 2 in control gets executed. 3 is stored in stash. 
+    const x = 1 in control gets executed. 1 is stored in stash and then popped. Before
+    3 * 4 in control gets executed, 3 in stash is popped. 3 * 4 in control gets executed.
+    12 is stored in stash. let y = x - 7 in control is executed. -6 is stored in stash and
+    gets popped. Only 12 element remains in stash. Therefore, the final result is 12.
+    
+4. Result: undefined
+    Explanation: While loop is executed in control. Undefined is stored in stash.
+    The condition is stored in stash. The while evaluates the predicate to be false and pops the
+    false from the stash. Only undefined remains in stash.
+
+5. Result: 16
+    Explanation: let x = 1 in control is executed. 1 is stored in stash then popped. The while loop
+    in control is executed. Undefined is stored in stash. The current value of x and 10.
+    are stored in stash. The < in control compares the last two values, which are x and 10 and the
+    boolean value is stored in stash after popping x and 10. The while  in control evaluates the boolean
+    value and pops it from stash. The last element in the stash is popped (initially undefined)
+    The code inside the while loop gets executed and the result for that iteration is stored in stash.
+    This repeats until x < 10 evaluates to false. The last element, 16 is the only element
+    remaining in stash.
+    
+6. Result: 8
+    Explanation: let x = undefined in control is executed and undefined is stored in stash then popped.
+    THe for loop in control is executed. Undefined is initially stored in the stash. Initializer of
+    the loop, x = 0 is executed. 0 is stored in the stash then popped. The loop condition, x < 10
+    is executed. true is stored in the stash. the for in control is executed. The
+    last element is popped from the stash. In each iteration, the last element is popped and he code in the body of the loop, x; is executed and 
+    the value of x (which is the x defined in the loop) is stored in the stash then popped. 
+    When the loop ends (x < 10 evaluates to false), the last element in the stash is 8.
+    
+    
+
+*/
+
+
