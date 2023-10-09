@@ -3,7 +3,7 @@
 
 1b. Control: 11, stash: 2
 
-1c. Control: 6, stash: 3
+1c. Control: 7, stash: 3
 
 1d. Control: 7, stash: 3
 
@@ -39,7 +39,6 @@
     last element is popped from the stash. In each iteration, the last element is popped and he code in the body of the loop, x; is executed and 
     the value of x (which is the x defined in the loop) is stored in the stash then popped. 
     When the loop ends (x < 10 evaluates to false), the last element in the stash is 8.
-    
     
 
 */
