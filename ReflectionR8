@@ -1,1 +1,35 @@
 // Reflection R8
+//1.
+function make_withdraw(balance, password) {
+    let wrong_attempts = 0;
+
+    function withdraw(amount, input_pass) {
+        if (password === input_pass) {
+            wrong_attempts = 0;
+        }
+        
+        if (wrong_attempts >= 3) {
+          return "Account disabled";  
+        } else {
+            if (input_pass !== password) {
+                wrong_attempts = wrong_attempts + 1;
+                return "Wrong password; no withdraw";    
+            } else if (balance >= amount) {
+                balance = balance - amount;
+                return balance;
+            } else {
+                return "Insufficient funds";
+            }
+        }
+    }
+    return withdraw;
+}
+
+const acc = make_withdraw(100, "my_password");
+acc(30, "his_passcode"); // returns "Wrong password; no withdraw"
+acc(30, "my_password"); // returns 70
+acc(10, "sesame"); // returns "Wrong password; no withdraw"
+acc(15, "canola"); // returns "Wrong password; no withdraw"
+acc(25, "olive"); // returns "Wrong password; no withdraw"
+acc(30, "my_password"); // returns "Account disabled"
+acc(30, "his_passcode"); // returns "Account disabled"
