@@ -1,5 +1,12 @@
 // StudioS9
 
+/* Questions to ask
+1. What is the difference between environment and frames? (Lecture notes state that environments
+    are sequence of frames. Does this mean an environment can have more than one frame?)
+2. In task 3 of "Know your environment". The final environment is the first d_map, and not the second
+    inner d_map. Why is that so?
+*/
+
 function d_filter(pred, xs) {
     if (is_null(xs)) {
         return null;
