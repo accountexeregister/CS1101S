@@ -7,6 +7,7 @@
     inner d_map. Why is that so?
 */
 
+// Studio S9
 function d_filter(pred, xs) {
     if (is_null(xs)) {
         return null;
