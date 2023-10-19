@@ -1,0 +1,36 @@
+// Reflection R9
+
+// Q1
+function make_optimized_search(A) {
+ // ???
+    const B = [];
+    for (let i = 0; i < array_length(A); i = i + 1) {
+        B[i] = A[i];
+    }
+   // merge_sort(B);
+ //return x => binary_search(B, x);
+}
+
+// Q2
+function fib(n) {
+    const fibs = [0, 1];
+    
+    for (let i = 2; i <= n; i = i + 1) {
+        fibs[i] = fibs[i - 1] + fibs[i - 2];
+    }
+    return fibs[n];
+}
+
+function fib_2(n) {
+    let previous_2 = 0;
+    let previous_1 = 1;
+    let result = previous_1;
+    for (let i = 2; i <= n; i = i + 1) {
+        result = previous_1 + previous_2;
+        previous_2 = previous_1;
+        previous_1 = result;
+    }
+    return result;
+}
+
+fib_2(11);
