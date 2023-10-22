@@ -1,0 +1,31 @@
+function bubblesort_list(L) {
+    // Your solution here.
+    function swap(lst, x, y) {
+        const temp = x;
+        set_head(lst, y);
+        set_head(tail(lst), temp);
+    }
+    let terminating_point = L;
+    while (!is_null(terminating_point) && !is_null(tail(terminating_point))) {
+        terminating_point = tail(terminating_point);
+    }
+    
+    while (terminating_point !== L) {
+        let L_j = L;
+        let new_terminating_point = null;
+        while (L_j !== terminating_point) {
+            if (head(L_j) > head(tail(L_j))) {
+                swap(L_j, head(L_j), head(tail(L_j)));
+            }
+            new_terminating_point = L_j;
+            L_j = tail(L_j);
+        }
+        terminating_point = new_terminating_point;
+    }
+    return L;
+    
+}
+
+const LL = list(3, 5, 2, 4, 1);
+bubblesort_list(LL);
+LL; // should show [1, [2, [3, [4, [5, null]]]]]
