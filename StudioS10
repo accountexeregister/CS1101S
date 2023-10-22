@@ -6,22 +6,17 @@ function bubblesort_list(L) {
         set_head(lst, y);
         set_head(tail(lst), temp);
     }
-    let terminating_point = L;
-    while (!is_null(terminating_point) && !is_null(tail(terminating_point))) {
-        terminating_point = tail(terminating_point);
-    }
+    let terminating_point = null;
     
     while (terminating_point !== L) {
         let L_j = L;
-        let new_terminating_point = null;
-        while (L_j !== terminating_point) {
+        while (tail(L_j) !== terminating_point) {
             if (head(L_j) > head(tail(L_j))) {
                 swap(L_j, head(L_j), head(tail(L_j)));
             }
-            new_terminating_point = L_j;
             L_j = tail(L_j);
         }
-        terminating_point = new_terminating_point;
+        terminating_point = L_j;
     }
     return L;
     
@@ -90,5 +85,5 @@ function mcc(n, k) {
     
 }
 
-mcc(365, 5);  // Expected result: 1730
+// mcc(365, 5);  // Expected result: 1730
 
