@@ -1,4 +1,4 @@
-// Q2
+// Q2 (2b)
 function bubblesort_list(L) {
     // Your solution here.
     function swap(lst, x, y) {
@@ -19,7 +19,22 @@ function bubblesort_list(L) {
         terminating_point = L_j;
     }
     return L;
-    
+}
+
+function bubblesort_list_2(L) {
+    const len = length(L);
+    function swap(lst, x, y) {
+        const temp = x;
+        set_head(lst, y);
+        set_head(tail(lst), temp);
+    }
+    for (let i = len, i >= 1; i = i - 1) {
+        let p = L;
+        for (let j = 0; j < i; j = j + 1) {
+            swap(p, head(p), head(tail(p)));
+        }
+        p = tail(p);
+    }
 }
 
 const LL = list(3, 5, 2, 4, 1);
@@ -86,4 +101,42 @@ function mcc(n, k) {
 }
 
 // mcc(365, 5);  // Expected result: 1730
+
+function rotate_matrix(M) {
+    const n = array_length(M);  // M is assumed n x n.
+
+    function swap(r1, c1, r2, c2) {
+        const temp = M[r1][c1];
+        M[r1][c1] = M[r2][c2];
+        M[r2][c2] = temp;
+    }
+
+    // Your solution here.
+    // transpose
+    for (let r = 0; r < n; r = r + 1) {
+        for (let c = r + 1; c < n; c = c + 1) {
+            swap(r, c, c, r);
+        }
+    }
+    const half_n = math_floor(n);
+    for (let r = 0; r < n; r = r + 1) {
+        reverse_array(M[r]);
+    }
+    
+}
+
+const M =
+[[ 1,  2,  3,  4],
+ [ 5,  6,  7,  8],
+ [ 9, 10, 11, 12],
+ [13, 14, 15, 16]];
+ 
+rotate_matrix(M);
+M;
+// M should have become
+// [[13,  9, 5, 1], 
+//  [14, 10, 6, 2], 
+//  [15, 11, 7, 3], 
+//  [16, 12, 8, 4]]
+
 
