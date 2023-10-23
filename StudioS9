@@ -26,5 +26,18 @@ L; // What is L now? Ans: list(1, 2, 4, 6, 8)
 
 // In class studio S9
 function count_pairs(x) {
-    
+    let pairs = null;
+    function check(xs) {
+        if (!is_pair(xs)) {
+            
+        } else if (!is_null(member(xs, pairs)) {
+            
+        } else {
+            pairs = pair(xs, pairs);
+            check(head(xs));
+            check(tail(xs));
+        }
+    }
+    check(x);
+    return length(pairs);
 }
