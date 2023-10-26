@@ -25,3 +25,9 @@ function zip_list_of_streams(ss) {
     () => zip_list_of_streams(append(tail(ss),
                                 list(stream_tail(head(ss))))));
 }
+
+// Q3
+function partial_sums(integers) {
+    return pair(head(s), 
+                () => add_streams(stream_tail(s), partial_sums(s)));
+}
