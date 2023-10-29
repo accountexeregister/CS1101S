@@ -1,0 +1,9 @@
+// Studio S11
+// Q 1
+/*
+A is an infinite stream of 1, 2, 4, 8, where each element is 2^n where n = 0, 1, 2,...
+
+B is an infinite stream of integers, where each element is the previous element multiplied by integers
+1,2, ....
+*/
+
