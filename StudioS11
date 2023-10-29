@@ -44,21 +44,49 @@ function coeffs_to_series(list_of_coeffs) {
     return iter(list_of_coeffs);
 }
 
+function fun_to_series(fun) {
+    return stream_map(fun, integers_from(0));
+}
+
 const alt_ones = pair(1, () => scale_stream(-1, alt_ones));
-const displayed = stream_map(display, alt_ones);
+// const displayed = stream_map(display, alt_ones);
 // stream_ref(displayed, 10);
 
 const alt_ones_2 = pair(1, () => negate_series(alt_ones_2));
-const displayed2 = stream_map(display, alt_ones_2);
+// const displayed2 = stream_map(display, alt_ones_2);
 // stream_ref(displayed2, 10);
 
 function alt_func(one) {
     return pair(one, () => alt_func(-1 * one));
 }
 const alt_ones_3 = alt_func(1);
-const displayed3 = stream_map(display, alt_ones_3);
+// const displayed3 = stream_map(display, alt_ones_3);
 // stream_ref(displayed3, 10);
 
 const zeros = add_streams(alt_ones, stream_tail(alt_ones));
-const displayed4 = stream_map(display, zeros);
-stream_ref(displayed4, 10);
+// const displayed4 = stream_map(display, zeros);
+// stream_ref(displayed4, 10);
+
+const zeros_2 = scale_stream(0, alt_ones);
+// const displayed5 = stream_map(display, zeros_2);
+// stream_ref(displayed5, 10);
+
+// Series
+
+const S1 = fun_to_series(x => 1);
+// const displayed6 = stream_map(display, S1);
+// stream_ref(displayed6, 10);
+let S = S1;
+for (let i = 0; i < 10; i = i + 1) {
+    // display(head(S));
+    S = stream_tail(S);
+}
+
+const S2 = fun_to_series(x => x + 1);
+let SS = S2;
+for (let i = 0; i < 10; i = i + 1) {
+    display(head(SS));
+    SS = stream_tail(SS);
+}
+
+
