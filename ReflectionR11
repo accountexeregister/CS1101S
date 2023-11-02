@@ -16,7 +16,27 @@ Examples at the end of the program
 */
 
 // Q1uhkn
+// Q2
+// the syntax predicate
+function is_logical_composition(component) {
+    return is_tagged_list(component, "logical_composition");
+}
 
+// selectors
+function logical_symbol(comp) {
+    return list_ref(comp, 1);
+}
+function logical_composition_first_component(comp) {
+    return list_ref(comp, 2);
+}
+function logical_composition_second_component(comp) {
+    return list_ref(comp, 3);
+}
+
+// helper to make a conditional expression
+function make_conditional_expression(pred, cons, alt) {
+    return list("conditional_expression", pred, cons, alt);
+}
 function evaluate(program) { 
     let C = list(make_block(program));
     let S = null;
@@ -104,17 +124,21 @@ function evaluate(program) {
                            
         
         } else if (is_logical_composition(command)) { // Q2
-            C = pair((logical_symbol(command) === "&&"
-                ? make_conditional_expression(
-                    logical_composition_first_component(command),
-                    logical_composition_second_component(command),
-                    make_literal(false)
-                    )
-                : make_conditional_expression(
-                    logical_composition_first_component(command),
-                    make_literal(true), 
-                    logical_composition_second_component(command),
-                    )), C);
+            C = pair(
+                  logical_symbol(command) === "&&"
+                        ? make_conditional_expression(
+                            logical_composition_first_component(command),
+                            logical_composition_second_component(command),
+                            make_literal(false)
+                          )
+                        : make_conditional_expression(
+                            logical_composition_first_component(command),
+                            make_literal(true),
+                            logical_composition_second_component(command)
+                          ),
+                      C
+                    );
+
         
         
         
@@ -700,36 +724,12 @@ function parse_and_evaluate(string) {
 }
 
 parse_and_evaluate("3 % 2 % 1;");
-parse_and_evaluate(‘parse(’parse("1;");’);‘);
+
 
 // Note: Precedence of operations cannot be changed as it is set by parser.
 // a % b % c evaluate to √a^2 + b^2 + c^2
 
-// Q2
-// the syntax predicate
-function is_logical_composition(component) {
-    return is_tagged_list(component, "logical_composition");
-}
 
-// selectors
-function logical_symbol(comp) {
-    return list_ref(comp, 1);
-}
-function logical_composition_first_component(comp) {
-    return list_ref(comp, 2);
-}
-function logical_composition_second_component(comp) {
-    return list_ref(comp, 3);
-}
-
-// helper to make a conditional expression
-function make_conditional_expression(pred, cons, alt) {
-    return list("conditional_expression", pred, cons, alt);
-}
-// helper to make a literal value
-function make_literal(value) {
-    return list("literal", value);
-}
 
 // Q3 
 // first semicolon: ends the "1" inside
