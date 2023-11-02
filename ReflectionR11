@@ -682,6 +682,11 @@ function parse_and_evaluate(string) {
     return evaluate(parse(string));
 }
 
+parse_and_evaluate("3 % 2 % 1;");
+
+// Note: Precedence of operations cannot be changed as it is set by parser.
+// a % b % c evaluate to √a^2 + b^2 + c^2
+
 //parse_and_evaluate("1;");
 
 //parse_and_evaluate("undefined;");
