@@ -102,7 +102,23 @@ function evaluate(program) {
                     pair(make_call_instruction(
                            length(arg_exprs)), C)));
                            
-        // machine instructions
+        
+        } else if (is_logical_composition(command)) { // Q2
+            C = pair((logical_symbol(command) === "&&"
+                ? make_conditional_expression(
+                    logical_composition_first_component(command),
+                    logical_composition_second_component(command),
+                    make_literal(false)
+                    )
+                : make_conditional_expression(
+                    logical_composition_first_component(command),
+                    make_literal(true), 
+                    logical_composition_second_component(command),
+                    )), C);
+        
+        
+        
+        // machine instructions    
         } else if (is_pop_instruction(command)) {
             S = tail(S);
         } else if (is_binary_operator_instruction(command)) {
@@ -186,7 +202,7 @@ function apply_binary(operator, op1, op2) {
            : operator === "/" 
            ? op1 / op2
            : operator === "%" 
-           ? math_hypot(op1, op2)
+           ? math_hypot(op1, op2) // Q1
            : operator === "<" 
            ? op1 < op2
            : operator === ">" 
@@ -586,7 +602,8 @@ const primitive_functions = list(
        list("is_null", is_null          ),
        list("display", display          ),
        list("error",   error            ),
-       list("math_pow",math_pow         )
+       list("math_pow",math_pow         ),
+       list("parse", parse)
        );
 const primitive_function_symbols =
     map(head, primitive_functions);
@@ -683,58 +700,42 @@ function parse_and_evaluate(string) {
 }
 
 parse_and_evaluate("3 % 2 % 1;");
+parse_and_evaluate(‘parse(’parse("1;");’);‘);
 
 // Note: Precedence of operations cannot be changed as it is set by parser.
 // a % b % c evaluate to √a^2 + b^2 + c^2
 
-//parse_and_evaluate("1;");
-
-//parse_and_evaluate("undefined;");
-
-//parse_and_evaluate("'hello';");
-
-//parse_and_evaluate("1 + 2;");
-
-//parse_and_evaluate("- 4;");
-
-//parse_and_evaluate("! true;");
-
-//parse_and_evaluate("'hello' + 'world';");
-
-//parse_and_evaluate("1; 2; 3;");
-
-//parse_and_evaluate("if (true) { 1; } else { 2; }");
-
-//parse_and_evaluate("true ? 1 : 2;");
-
-//parse_and_evaluate("math_PI;");
-
-//parse_and_evaluate("const x = 1 + 2; x;");
-
-//parse_and_evaluate("const x = 1; { const x = 2; x; } x;");
-
-//parse_and_evaluate("math_pow(2, 3);");
-
-/*
-parse_and_evaluate(`
-function factorial(n) {
-    return n === 1
-           ? 1
-           : n * factorial(n - 1);
+// Q2
+// the syntax predicate
+function is_logical_composition(component) {
+    return is_tagged_list(component, "logical_composition");
 }
-factorial(5);`);
-*/
 
-/*
-parse_and_evaluate(`
-const n = 1000000;
-function factorial(n) {
-    return n === 1
-           ? 1
-           : factorial(n - 1) * n;
+// selectors
+function logical_symbol(comp) {
+    return list_ref(comp, 1);
 }
-factorial(5) + n;`);
-*/
+function logical_composition_first_component(comp) {
+    return list_ref(comp, 2);
+}
+function logical_composition_second_component(comp) {
+    return list_ref(comp, 3);
+}
+
+// helper to make a conditional expression
+function make_conditional_expression(pred, cons, alt) {
+    return list("conditional_expression", pred, cons, alt);
+}
+// helper to make a literal value
+function make_literal(value) {
+    return list("literal", value);
+}
+
+// Q3 
+// first semicolon: ends the "1" inside
+// second semicolon: end of parse inside parse inside
+// third semicolon:ends the first parse inside
+// fourth semicolon: ends the parse_and_evaluate
 
 
 
