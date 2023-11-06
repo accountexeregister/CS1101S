@@ -12,12 +12,18 @@ functional programming language, including:
 
 Examples at the end of the program
 */
-
+function move_fun_declr_to_top(C) {
+    display_list(filter(x => is_function_declaration(x), C));
+    display_list(filter(x => !is_function_declaration(x), C));
+    return append(filter(x => is_function_declaration(x), C),
+                filter(x => !is_function_declaration(x), C));
+}
 function evaluate(program) { 
     let C = list(make_block(program));
     let S = null;
     let E = the_global_environment;
     while (! is_null(C)) {
+        // C = move_fun_declr_to_top(C);
         display_control(C);
         display_stash(S);   
         display_environment(E);
@@ -40,14 +46,19 @@ function evaluate(program) {
                    C));
         } else if (is_sequence(command)) {
             const body = sequence_statements(command);
+            // C = move_fun_declr_to_top(C);
             C = is_null(body)
                 ? pair(make_literal(undefined), C)
                 : is_null(tail(body))
                 ? pair(head(body), C)
-                : pair(head(body),
-                    pair(make_pop_instruction(),
-                      pair(make_sequence(tail(body)),
-                        C)));
+                : !is_function_declaration(head(body)) 
+                    ? pair(make_sequence(tail(body)), 
+                        pair(make_pop_instruction(),
+                            pair(head(body), C)))
+                    : pair(head(body),
+                        pair(make_pop_instruction(),
+                          pair(make_sequence(tail(body)),
+                            C)));
         } else if (is_conditional(command)) {
             C = pair(conditional_predicate(command),
                   pair(make_branch_instruction(
@@ -1042,8 +1053,12 @@ a;
 */
 
 parse_and_evaluate(`
-function f(x) {
-    12;
+{
+const x = f(8);
+function f(y) {
+return y + 34;
 }
-f(49);
+x;
+}
+
 `);
