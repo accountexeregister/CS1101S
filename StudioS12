@@ -1052,6 +1052,7 @@ a;
 `);
 */
 
+/*
 parse_and_evaluate(`
 {
 const x = f(8);
@@ -1061,4 +1062,16 @@ return y + 34;
 x;
 }
 
+`);
+
+parse_and_evaluate(`
+function f(x) {
+    12;
+}
+f(49);
+`);
+*/
+
+parse_and_evaluate(`
+false ? abracadabra(simsalabim) : 42;
 `);
